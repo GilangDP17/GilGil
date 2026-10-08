@@ -1,5 +1,5 @@
 // Teks profesi yang mengetik otomatis (ubah sesuai kamu)
-const roles=["Mahasiswa / Pelajar","Web Developer","Kreator Konten","Pembelajar Seumur Hidup"];
+const roles=["Cyber Security Enthusiast","Network Engineering Student","Web Developer"];
 const el=document.getElementById("typing");let r=0,c=0,del=false;
 (function type(){
   const w=roles[r];el.textContent=w.slice(0,c);
