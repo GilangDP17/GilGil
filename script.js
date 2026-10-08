@@ -22,19 +22,34 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{
 document.querySelectorAll(".reveal").forEach(s=>io.observe(s));
 
 // Foto miring mengikuti mouse + bar progress scroll
-const ph=document.getElementById("photo");
-document.addEventListener("mousemove",e=>{
-  const x=(e.clientX/innerWidth-.5)*12,y=(e.clientY/innerHeight-.5)*-12;
-  ph.style.transform=`perspective(700px) rotateY(${x}deg) rotateX(${y}deg)`;
+const ph = document.getElementById("photo");
+
+document.addEventListener("mousemove", e => {
+
+    if (!ph) return;
+
+    const x =
+        (e.clientX / innerWidth - 0.5) * 12;
+
+    const y =
+        (e.clientY / innerHeight - 0.5) * -12;
+
+    ph.style.transform =
+        `perspective(700px)
+         rotateY(${x}deg)
+         rotateX(${y}deg)`;
 });
 addEventListener("scroll",()=>{
   const h=document.documentElement;
   document.getElementById("progress").style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%";
 });
-document.getElementById("year").textContent=new Date().getFullYear();
+const year = document.getElementById("year");
 
-/* =========================================
-   AESTHETIC PIXEL SNOW
+if (year) {
+    year.textContent = new Date().getFullYear();
+}
+
+/* =========================================  AESTHETIC PIXEL SNOW
    Background + Mouse Interaction
 ========================================= */
 
@@ -413,29 +428,206 @@ if (snowContainer) {
 
 
     window.addEventListener(
-        "touchend",
-        () => {
+    "touchend",
+    () => {
+        mouse.active = false;
+    }
+);
 
-            mouse.active = false;
-        }
-    );
 
+/* =========================================
+   START PIXEL SNOW
+========================================= */
 
-    /* =========================
-       START
-    ========================= */
+resizeSnow();
+animateSnow();
 
-    window.addEventListener(
-        "resize",
-        resizeSnow
-    );
+window.addEventListener(
+    "resize",
+    resizeSnow
+);
 
-    resizeSnow();
-
-    animateSnow();
 }
 
 /* =========================================
+   SOUND EFFECT SYSTEM
+========================================= */
+
+let audioCtx = null;
+
+function getAudioContext() {
+    if (!audioCtx) {
+        audioCtx = new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+    }
+
+    if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+    }
+
+    return audioCtx;
+}
+
+
+/* =========================================
+   SOUND: HIGH FIVE
+========================================= */
+
+function playHighFiveSound() {
+
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+
+    // Impact / pukulan tos
+    const impact = ctx.createOscillator();
+    const impactGain = ctx.createGain();
+
+    impact.type = "square";
+
+    impact.frequency.setValueAtTime(
+        220,
+        now
+    );
+
+    impact.frequency.exponentialRampToValueAtTime(
+        65,
+        now + 0.18
+    );
+
+    impactGain.gain.setValueAtTime(
+        0.0001,
+        now
+    );
+
+    impactGain.gain.exponentialRampToValueAtTime(
+        0.35,
+        now + 0.015
+    );
+
+    impactGain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.20
+    );
+
+    impact.connect(impactGain);
+    impactGain.connect(ctx.destination);
+
+    impact.start(now);
+    impact.stop(now + 0.21);
+
+
+    // Digital beep
+    const beep = ctx.createOscillator();
+    const beepGain = ctx.createGain();
+
+    beep.type = "sine";
+
+    beep.frequency.setValueAtTime(
+        650,
+        now
+    );
+
+    beep.frequency.exponentialRampToValueAtTime(
+        1300,
+        now + 0.12
+    );
+
+    beepGain.gain.setValueAtTime(
+        0.0001,
+        now
+    );
+
+    beepGain.gain.exponentialRampToValueAtTime(
+        0.16,
+        now + 0.02
+    );
+
+    beepGain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.16
+    );
+
+    beep.connect(beepGain);
+    beepGain.connect(ctx.destination);
+
+    beep.start(now);
+    beep.stop(now + 0.18);
+}
+
+
+/* =========================================
+   SOUND: ACCESS GRANTED
+========================================= */
+
+function playAccessGrantedSound() {
+
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+
+    const notes = [
+        {
+            frequency: 523.25,
+            delay: 0
+        },
+        {
+            frequency: 659.25,
+            delay: 0.12
+        },
+        {
+            frequency: 783.99,
+            delay: 0.24
+        },
+        {
+            frequency: 1046.50,
+            delay: 0.38
+        }
+    ];
+
+    notes.forEach(note => {
+
+        const oscillator =
+            ctx.createOscillator();
+
+        const gain =
+            ctx.createGain();
+
+        oscillator.type = "sine";
+
+        oscillator.frequency.value =
+            note.frequency;
+
+        const start =
+            now + note.delay;
+
+        gain.gain.setValueAtTime(
+            0.0001,
+            start
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.18,
+            start + 0.03
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            start + 0.30
+        );
+
+        oscillator.connect(gain);
+        gain.connect(ctx.destination);
+
+        oscillator.start(start);
+
+        oscillator.stop(
+            start + 0.32
+        );
+    });
+}
+
+   /* =========================================
    ROBOT INTRO SYSTEM
 ========================================= */
 
@@ -451,12 +643,9 @@ const robotSubtext =
 const highFiveArea =
     document.getElementById("highFiveArea");
 
-const skipIntro =
-    document.getElementById("skipIntro");
-
 
 /* =========================================
-   CEK ELEMENT
+   CEK ELEMENT ROBOT
 ========================================= */
 
 if (
@@ -485,7 +674,7 @@ if (
 
     /* =====================================
        STEP 2
-       Robot memperkenalkan diri
+       Robot memberikan instruksi
     ===================================== */
 
     setTimeout(() => {
@@ -506,54 +695,147 @@ if (
 
     setTimeout(() => {
 
-        robotIntro.classList.add("ready");
+        robotIntro.classList.add(
+            "ready"
+        );
 
     }, 3800);
 
 
-    /* =========================================
-   HIGH FIVE INTERACTION
-========================================= */
+    /* =====================================
+       HIGH FIVE INTERACTION
+    ===================================== */
 
-highFiveArea.addEventListener("pointerdown", (event) => {
+    highFiveArea.addEventListener(
+        "pointerdown",
+        (event) => {
 
-    /* posisi flash mengikuti tangan */
-    robotIntro.style.setProperty(
-        "--flash-x",
-        event.clientX + "px"
+
+            /* =============================
+               CEGAH KLIK KEDUA
+            ============================= */
+
+            if (
+                robotIntro.classList.contains(
+                    "high-five"
+                )
+            ) {
+                return;
+            }
+
+
+            /* =============================
+               🔊 SOUND HIGH FIVE
+            ============================= */
+
+            playHighFiveSound();
+
+
+            /* =============================
+               POSISI FLASH
+            ============================= */
+
+            const rect =
+                robotIntro.getBoundingClientRect();
+
+            const x =
+                (
+                    (event.clientX - rect.left)
+                    / rect.width
+                ) * 100;
+
+            const y =
+                (
+                    (event.clientY - rect.top)
+                    / rect.height
+                ) * 100;
+
+
+            robotIntro.style.setProperty(
+                "--flash-x",
+                x + "%"
+            );
+
+            robotIntro.style.setProperty(
+                "--flash-y",
+                y + "%"
+            );
+
+
+            /* =============================
+               AKTIFKAN HIGH FIVE
+            ============================= */
+
+            robotIntro.classList.add(
+                "high-five"
+            );
+
+            robotIntro.classList.add(
+                "success"
+            );
+
+
+            /* =============================
+               UBAH TEKS
+            ============================= */
+
+            robotText.textContent =
+                "HIGH FIVE! ✋";
+
+            robotSubtext.textContent =
+                "ACCESS GRANTED";
+
+
+            /* =============================
+               EFEK ROBOT TERKENA TOS
+            ============================= */
+
+            const robotWrapper =
+                document.querySelector(
+                    ".robot-wrapper"
+                );
+
+            if (robotWrapper) {
+
+                robotWrapper.classList.add(
+                    "robot-hit"
+                );
+
+            }
+
+
+            /* =============================
+               MATIKAN INTERAKSI
+            ============================= */
+
+            highFiveArea.style.pointerEvents =
+                "none";
+
+
+            /* =============================
+               🔊 SOUND ACCESS GRANTED
+            ============================= */
+
+            setTimeout(() => {
+
+                playAccessGrantedSound();
+
+            }, 650);
+
+
+            /* =============================
+               ROBOT KELUAR
+            ============================= */
+
+            setTimeout(() => {
+
+                robotIntro.classList.add(
+                    "hide"
+                );
+
+            }, 1400);
+
+        }
     );
 
-    robotIntro.style.setProperty(
-        "--flash-y",
-        event.clientY + "px"
-    );
-
-
-    /* efek sukses */
-
-    robotIntro.classList.add("high-five");
-    robotIntro.classList.add("success");
-
-
-    robotText.textContent =
-        "HIGH FIVE! ✋";
-
-    robotSubtext.textContent =
-        "ACCESS GRANTED";
-
-
-    /* robot sedikit mundur */
-
-    document.querySelector(".robot-wrapper")
-        ?.classList.add("robot-hit");
-
-
-    /* buka website */
-
-    setTimeout(() => {
-
-        robotIntro.classList.add("hide");
-
-    }, 1400);
-
-});
+}
