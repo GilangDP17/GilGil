@@ -139,21 +139,582 @@ footer{text-align:center;padding:30px 0 40px;color:var(--muted);font-size:.9rem}
   .bgshow div:first-child{opacity:1}
 }
 
-/* BACKGROUND */
+/* =========================
+   PIXEL SNOW BACKGROUND
+========================= */
 
 .pixel-snow-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  contain: layout style paint;
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+    overflow: hidden;
+
+    background: transparent;
 }
 
 .pixel-snow-container canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+/* Semua konten website berada di atas salju */
+nav,
+.hero,
+section,
+footer,
+.marquee,
+.progress {
+    position: relative;
+    z-index: 2;
+}
+
+/* Background foto juga di bawah salju */
+.bgshow {
+    z-index: -1;
+}
+
+/* =========================================
+   CYBER HIGH FIVE - GILANG PORTFOLIO
+========================================= */
+
+.high-five-area {
+    position: absolute;
+    right: 12%;
+    top: 48%;
+    z-index: 20;
+
+    width: 155px;
+    height: 155px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    opacity: 0;
+    transform: scale(.5) translateX(40px);
+
+    pointer-events: none;
+
+    transition:
+        opacity .7s ease,
+        transform .7s cubic-bezier(.16,1,.3,1);
+}
+
+
+/* muncul setelah robot siap */
+
+.robot-intro.ready .high-five-area {
+    opacity: 1;
+
+    transform:
+        scale(1)
+        translateX(0);
+
+    pointer-events: auto;
+}
+
+
+/* =========================================
+   HOLOGRAM CIRCLE
+========================================= */
+
+.high-five-area::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 12px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(61, 90, 254, .55);
+
+    box-shadow:
+        0 0 20px
+        rgba(61, 90, 254, .25),
+
+        inset 0 0 25px
+        rgba(61, 90, 254, .08);
+
+    animation:
+        hudRotate 8s linear infinite;
+}
+
+
+/* lingkaran kedua */
+
+.high-five-area::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 28px;
+
+    border-radius: 50%;
+
+    border:
+        1px dashed
+        rgba(255,255,255,.25);
+
+    animation:
+        hudRotateReverse 12s linear infinite;
+}
+
+
+@keyframes hudRotate {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+@keyframes hudRotateReverse {
+
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+
+}
+
+
+/* =========================================
+   TARGET CORNERS
+========================================= */
+
+.high-five-ring {
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        transparent;
+
+    pointer-events: none;
+}
+
+
+/* empat garis target */
+
+.high-five-ring::before,
+.high-five-ring::after {
+    content: "";
+
+    position: absolute;
+
+    width: 25px;
+    height: 25px;
+
+    border-color:
+        #3d5afe;
+
+    border-style: solid;
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(61,90,254,.8)
+        );
+}
+
+
+.high-five-ring::before {
+    top: 0;
+    left: 0;
+
+    border-width:
+        2px 0 0 2px;
+}
+
+
+.high-five-ring::after {
+    right: 0;
+    bottom: 0;
+
+    border-width:
+        0 2px 2px 0;
+}
+
+
+/* =========================================
+   HAND
+========================================= */
+
+.high-five-icon {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: 82px;
+    height: 82px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 43px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(61,90,254,.20),
+            rgba(11,16,32,.85)
+        );
+
+    border:
+        1px solid
+        rgba(120,140,255,.75);
+
+    box-shadow:
+
+        0 0 15px
+        rgba(61,90,254,.45),
+
+        0 0 45px
+        rgba(61,90,254,.18),
+
+        inset 0 0 20px
+        rgba(61,90,254,.15);
+
+    animation:
+        handHover 1.8s ease-in-out infinite;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+
+@keyframes handHover {
+
+    0%,100% {
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translateY(-7px)
+            scale(1.06);
+    }
+
+}
+
+
+/* hover */
+
+.high-five-area:hover
+.high-five-icon {
+
+    transform:
+        scale(1.15);
+
+    box-shadow:
+
+        0 0 25px
+        rgba(61,90,254,.8),
+
+        0 0 70px
+        rgba(61,90,254,.35),
+
+        inset 0 0 25px
+        rgba(61,90,254,.25);
+}
+
+
+/* =========================================
+   ENERGY PULSE
+========================================= */
+
+.high-five-area .high-five-ring {
+
+    animation:
+        targetPulse 2s ease-out infinite;
+}
+
+
+@keyframes targetPulse {
+
+    0% {
+        transform: scale(.8);
+        opacity: .1;
+    }
+
+    50% {
+        opacity: .8;
+    }
+
+    100% {
+        transform: scale(1.25);
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================================
+   TEXT
+========================================= */
+
+.high-five-area p {
+
+    position: absolute;
+
+    bottom: -32px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: 180px;
+
+    margin: 0;
+
+    text-align: center;
+
+    color:
+        rgba(255,255,255,.75);
+
+    font-family:
+        "Unbounded",
+        sans-serif;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
+    white-space: nowrap;
+
+    text-shadow:
+        0 0 10px
+        rgba(61,90,254,.8);
+}
+
+
+/* =========================================
+   SCAN LINE
+========================================= */
+
+.high-five-area p::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -12px;
+
+    width: 70px;
+
+    height: 1px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #3d5afe,
+            transparent
+        );
+
+    box-shadow:
+        0 0 8px #3d5afe;
+}
+
+
+/* =========================================
+   HIGH FIVE SUCCESS
+========================================= */
+
+.robot-intro.high-five
+.high-five-icon {
+
+    animation:
+        highFiveImpact .65s
+        cubic-bezier(.2,.8,.2,1)
+        forwards;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.35),
+            rgba(61,90,254,.25)
+        );
+
+    border-color:
+        #ffffff;
+
+    box-shadow:
+
+        0 0 25px
+        rgba(255,255,255,.9),
+
+        0 0 70px
+        rgba(61,90,254,.9),
+
+        0 0 120px
+        rgba(61,90,254,.5);
+}
+
+
+@keyframes highFiveImpact {
+
+    0% {
+        transform:
+            scale(1);
+    }
+
+    35% {
+        transform:
+            scale(1.45)
+            rotate(-8deg);
+    }
+
+    55% {
+        transform:
+            scale(.9)
+            rotate(6deg);
+    }
+
+    75% {
+        transform:
+            scale(1.2)
+            rotate(-3deg);
+    }
+
+    100% {
+        transform:
+            scale(1);
+    }
+
+}
+
+
+/* =========================================
+   SUCCESS TEXT
+========================================= */
+
+.robot-intro.success
+.high-five-area p {
+
+    color: #ffffff;
+
+    text-shadow:
+
+        0 0 8px #ffffff,
+
+        0 0 20px #3d5afe;
+}
+
+
+/* =========================================
+   SCREEN FLASH
+========================================= */
+
+.robot-intro.high-five::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 50;
+
+    background:
+        radial-gradient(
+            circle at
+            var(--flash-x, 70%)
+            var(--flash-y, 50%),
+            rgba(255,255,255,.8),
+            rgba(61,90,254,.25),
+            transparent 45%
+        );
+
+    pointer-events: none;
+
+    animation:
+        highFiveFlash .7s ease-out
+        forwards;
+}
+
+
+@keyframes highFiveFlash {
+
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .high-five-area {
+
+        right: 50%;
+
+        top: auto;
+
+        bottom: 12%;
+
+        transform:
+            translateX(50%)
+            scale(.6);
+    }
+
+
+    .robot-intro.ready .high-five-area {
+
+        transform:
+            translateX(50%)
+            scale(1);
+    }
+
 }
