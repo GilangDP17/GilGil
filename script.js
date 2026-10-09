@@ -8,18 +8,86 @@ const el=document.getElementById("typing");let r=0,c=0,del=false;
   c+=del?-1:1;setTimeout(type,del?45:90);
 })();
 
-// Muncul saat di-scroll, isi lingkaran skill, hitung angka
-const io=new IntersectionObserver(es=>es.forEach(e=>{
-  if(!e.isIntersecting)return;
-  const t=e.target;t.classList.add("show");
-  t.querySelectorAll(".dial").forEach(d=>d.style.setProperty("--p",d.dataset.p));
-  t.querySelectorAll("[data-n]").forEach(n=>{
-    const to=+n.dataset.n;let i=0;
-    const id=setInterval(()=>{i++;n.textContent=i+"+";if(i>=to)clearInterval(id)},90);
-  });
-  io.unobserve(t);
-}),{threshold:.15});
-document.querySelectorAll(".reveal").forEach(s=>io.observe(s));
+
+/* =========================================
+   SCROLL REVEAL + SKILL + COUNTER
+========================================= */
+
+const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+).matches;
+
+const animatedElements = document.querySelectorAll(`
+    .reveal,
+    header.hero,
+    section .tile,
+    section .ring,
+    section .row,
+    section .proj,
+    #sertifikat .cert-card,
+    section .contact
+`);
+
+animatedElements.forEach((element, index) => {
+    element.classList.add("scroll-item");
+    element.style.setProperty(
+        "--reveal-delay",
+        `${(index % 4) * 100}ms`
+    );
+});
+
+function activateElement(element) {
+    if (element.dataset.animated === "true") return;
+
+    element.dataset.animated = "true";
+    element.classList.add("show", "is-visible");
+
+    element.querySelectorAll(".dial").forEach(dial => {
+        dial.style.setProperty("--p", dial.dataset.p);
+    });
+
+    element.querySelectorAll("[data-n]").forEach(number => {
+        const target = Number(number.dataset.n);
+
+        if (!Number.isFinite(target)) return;
+
+        if (reduceMotion) {
+            number.textContent = target + "+";
+            return;
+        }
+
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current++;
+            number.textContent = current + "+";
+
+            if (current >= target) {
+                clearInterval(timer);
+            }
+        }, 90);
+    });
+}
+
+if (reduceMotion) {
+    animatedElements.forEach(activateElement);
+} else {
+    const scrollObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            activateElement(entry.target);
+            scrollObserver.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -25px 0px"
+    });
+
+    animatedElements.forEach(element => {
+        scrollObserver.observe(element);
+    });
+}
 
 // Foto miring mengikuti mouse + bar progress scroll
 const ph = document.getElementById("photo");
@@ -839,3 +907,47 @@ if (
     );
 
 }
+
+```javascript
+/* =========================================
+   FILTER SERTIFIKAT
+========================================= */
+
+const certFilters = document.querySelectorAll(".cert-filter");
+const certCards = document.querySelectorAll(".cert-card");
+
+certFilters.forEach(button => {
+    button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+
+        certFilters.forEach(item => {
+            const active = item === button;
+
+            item.classList.toggle("active", active);
+            item.setAttribute("aria-pressed", String(active));
+        });
+
+        certCards.forEach(card => {
+            const match =
+                filter === "all" ||
+                card.dataset.category === filter;
+
+            card.hidden = !match;
+        });
+    });
+});
+
+/* =========================================
+   LIHAT SERTIFIKAT
+========================================= */
+
+document.querySelectorAll(".cert-view").forEach(button => {
+    button.addEventListener("click", () => {
+        const image = button.dataset.image;
+
+        if (image) {
+            window.open(image, "_blank", "noopener,noreferrer");
+        }
+    });
+});
+```
