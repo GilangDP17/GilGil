@@ -50,7 +50,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style_fixed.css">
+    <link rel="stylesheet" href="style.css">
     <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -207,15 +207,57 @@
   <div style="background-image:url('bg3.jpg')"></div>
 </div>
 
-<nav>
-  <a href="#beranda">Beranda</a>
-  <a href="#tentang">Tentang</a>
-  <a href="#keahlian">Skill</a>
-  <a href="#pengalaman">Jejak</a>
-  <a href="#proyek">Proyek</a>
-  <a href="#Sertifikat">  Sertifikasi</a>
-  <a href="#kontak">Kontak</a>
+
+<!-- NAVBAR CYBER -->
+<nav class="cyber-nav" id="cyberNav">
+    <a href="#beranda" class="nav-brand" aria-label="Beranda">
+        <span class="brand-icon">G</span>
+        <span class="brand-text">GILANG<span>.</span></span>
+    </a>
+
+    <button
+        class="nav-toggle"
+        id="navToggle"
+        aria-label="Buka menu navigasi"
+        aria-expanded="false"
+        aria-controls="navMenu"
+        type="button">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+        <a href="#beranda" class="nav-link active">
+            <span class="nav-number">01</span> Beranda
+        </a>
+
+        <a href="#tentang" class="nav-link">
+            <span class="nav-number">02</span> Tentang
+        </a>
+
+        <a href="#keahlian" class="nav-link">
+            <span class="nav-number">03</span> Keahlian
+        </a>
+
+        <a href="#pengalaman" class="nav-link">
+            <span class="nav-number">04</span> Jejak
+        </a>
+
+        <a href="#proyek" class="nav-link">
+            <span class="nav-number">05</span> Proyek
+        </a>
+
+        <a href="#sertifikat" class="nav-link">
+            <span class="nav-number">06</span> Sertifikasi
+        </a>
+
+        <a href="#kontak" class="nav-contact">
+            Let's Talk <span>↗</span>
+        </a>
+    </div>
 </nav>
+
 
 <header class="hero" id="beranda">
   <div class="wrap">
@@ -294,161 +336,164 @@
   </div>
 </section>
 
-
-
-<!-- ==================== SERTIFIKAT ==================== -->
 <section id="sertifikat" class="cert-section">
-
     <div class="cert-header reveal">
         <span class="cert-label">VERIFIED ACHIEVEMENTS</span>
-
         <h2>Sertifikat & <span>Pencapaian</span></h2>
-
         <p>
-            Beberapa sertifikat pembelajaran di bidang
-            teknologi informasi, networking, programming,
-            dan cyber security.
+            Klik salah satu sertifikat untuk melihat informasi
+            lengkap dan detail pencapaiannya.
         </p>
     </div>
 
-    <!-- FILTER SERTIFIKAT -->
     <div class="cert-filters reveal">
-        <button type="button" class="cert-filter active"
-                data-filter="all" aria-pressed="true">
-            Semua
-        </button>
-
-        <button type="button" class="cert-filter"
-                data-filter="cyber" aria-pressed="false">
-            Cyber Security
-        </button>
-
-        <button type="button" class="cert-filter"
-                data-filter="networking" aria-pressed="false">
-            Networking
-        </button>
-
-        <button type="button" class="cert-filter"
-                data-filter="programming" aria-pressed="false">
-            Programming
-        </button>
-
-        <button type="button" class="cert-filter"
-                data-filter="support" aria-pressed="false">
-            IT Support
-        </button>
+        <button class="cert-filter active" data-filter="all" type="button">Semua</button>
+        <button class="cert-filter" data-filter="cyber" type="button">Cyber Security</button>
+        <button class="cert-filter" data-filter="networking" type="button">Networking</button>
+        <button class="cert-filter" data-filter="programming" type="button">Programming</button>
+        <button class="cert-filter" data-filter="support" type="button">IT Support</button>
     </div>
 
-    <!-- GRID UTAMA: JANGAN MEMBUAT GRID BERSARANG -->
     <div class="cert-grid">
 
-        <!-- SERTIFIKAT 1 -->
-        <article class="cert-card reveal" data-category="cyber">
+        <article class="cert-card" data-category="cyber"
+            tabindex="0" role="button" aria-haspopup="dialog"
+            data-title="Cyber Security Fundamentals"
+            data-category-name="Cyber Security"
+            data-issuer="Isi nama penyelenggara"
+            data-date="Isi tanggal terbit"
+            data-description="Sertifikat pembelajaran dasar keamanan siber, termasuk pengenalan ancaman digital, keamanan akun, dan prinsip perlindungan informasi."
+            data-image="assets/certificates/cyber-security.jpg">
+
             <div class="cert-image">
-                <img
-                    src="assets/certificates/cyber-security.jpg"
-                    alt="Sertifikat Cyber Security"
-                    loading="lazy"
-                    onerror="this.style.display='none'">
-
+                <img src="assets/certificates/cyber-security.jpg"
+                     alt="Sertifikat Cyber Security"
+                     onerror="this.style.display='none'">
                 <span class="cert-badge">CYBER SECURITY</span>
-
-                <div class="cert-overlay">
-                    <button type="button" class="cert-view"
-                            data-image="assets/certificates/cyber-security.jpg">
-                        Lihat Sertifikat
-                    </button>
-                </div>
+                <div class="cert-overlay"><span class="cert-view">Lihat Detail ↗</span></div>
             </div>
-
             <div class="cert-content">
                 <span class="cert-year">2026</span>
                 <h3>Cyber Security Fundamentals</h3>
-                <p>Sertifikat pembelajaran dasar keamanan siber.</p>
+                <p>Klik untuk melihat informasi sertifikat.</p>
             </div>
         </article>
 
-        <!-- SERTIFIKAT 2 -->
-        <article class="cert-card reveal" data-category="networking">
+        <article class="cert-card" data-category="networking"
+            tabindex="0" role="button" aria-haspopup="dialog"
+            data-title="Computer Networking"
+            data-category-name="Networking"
+            data-issuer="Isi nama penyelenggara"
+            data-date="Isi tanggal terbit"
+            data-description="Pembelajaran jaringan komputer, konsep IP address, perangkat jaringan, dan dasar konfigurasi jaringan."
+            data-image="assets/certificates/networking.jpg">
+
             <div class="cert-image">
-                <img
-                    src="assets/certificates/networking.jpg"
-                    alt="Sertifikat Networking"
-                    loading="lazy"
-                    onerror="this.style.display='none'">
-
+                <img src="assets/certificates/networking.jpg"
+                     alt="Sertifikat Networking"
+                     onerror="this.style.display='none'">
                 <span class="cert-badge">NETWORKING</span>
-
-                <div class="cert-overlay">
-                    <button type="button" class="cert-view"
-                            data-image="assets/certificates/networking.jpg">
-                        Lihat Sertifikat
-                    </button>
-                </div>
+                <div class="cert-overlay"><span class="cert-view">Lihat Detail ↗</span></div>
             </div>
-
             <div class="cert-content">
                 <span class="cert-year">2026</span>
                 <h3>Computer Networking</h3>
-                <p>Pembelajaran jaringan komputer dan konfigurasi jaringan.</p>
+                <p>Klik untuk melihat informasi sertifikat.</p>
             </div>
         </article>
 
-        <!-- SERTIFIKAT 3 -->
-        <article class="cert-card reveal" data-category="programming">
+        <article class="cert-card" data-category="programming"
+            tabindex="0" role="button" aria-haspopup="dialog"
+            data-title="Web Development"
+            data-category-name="Programming"
+            data-issuer="Isi nama penyelenggara"
+            data-date="Isi tanggal terbit"
+            data-description="Pembelajaran pengembangan website menggunakan HTML, CSS, dan JavaScript, mulai dari struktur halaman hingga interaktivitas."
+            data-image="assets/certificates/programming.jpg">
+
             <div class="cert-image">
-                <img
-                    src="assets/certificates/programming.jpg"
-                    alt="Sertifikat Programming"
-                    loading="lazy"
-                    onerror="this.style.display='none'">
-
+                <img src="assets/certificates/programming.jpg"
+                     alt="Sertifikat Programming"
+                     onerror="this.style.display='none'">
                 <span class="cert-badge">PROGRAMMING</span>
-
-                <div class="cert-overlay">
-                    <button type="button" class="cert-view"
-                            data-image="assets/certificates/programming.jpg">
-                        Lihat Sertifikat
-                    </button>
-                </div>
+                <div class="cert-overlay"><span class="cert-view">Lihat Detail ↗</span></div>
             </div>
-
             <div class="cert-content">
                 <span class="cert-year">2026</span>
                 <h3>Web Development</h3>
-                <p>Pembelajaran HTML, CSS, JavaScript, dan pengembangan web.</p>
+                <p>Klik untuk melihat informasi sertifikat.</p>
             </div>
         </article>
 
-        <!-- SERTIFIKAT 4: IT SUPPORT -->
-        <article class="cert-card reveal" data-category="support">
+        <article class="cert-card" data-category="support"
+            tabindex="0" role="button" aria-haspopup="dialog"
+            data-title="IT Support Fundamentals"
+            data-category-name="IT Support"
+            data-issuer="Isi nama penyelenggara"
+            data-date="Isi tanggal terbit"
+            data-description="Pembelajaran dasar dukungan teknis, identifikasi masalah komputer, troubleshooting perangkat keras, dan perangkat lunak."
+            data-image="assets/certificates/it-support.jpg">
+
             <div class="cert-image">
-                <img
-                    src="assets/certificates/it-support.jpg"
-                    alt="Sertifikat IT Support Fundamentals"
-                    loading="lazy"
-                    onerror="this.style.display='none'">
-
+                <img src="assets/certificates/it-support.jpg"
+                     alt="Sertifikat IT Support"
+                     onerror="this.style.display='none'">
                 <span class="cert-badge">IT SUPPORT</span>
-
-                <div class="cert-overlay">
-                    <button type="button" class="cert-view"
-                            data-image="assets/certificates/it-support.jpg">
-                        Lihat Sertifikat
-                    </button>
-                </div>
+                <div class="cert-overlay"><span class="cert-view">Lihat Detail ↗</span></div>
             </div>
-
             <div class="cert-content">
                 <span class="cert-year">2026</span>
                 <h3>IT Support Fundamentals</h3>
-                <p>Sertifikat dasar troubleshooting hardware dan software.</p>
+                <p>Klik untuk melihat informasi sertifikat.</p>
             </div>
         </article>
 
     </div>
 </section>
-<!-- ==================== AKHIR SERTIFIKAT ==================== -->
+
+<!-- JENDELA DETAIL SERTIFIKAT -->
+<div class="cert-modal" id="certModal" aria-hidden="true">
+    <div class="cert-modal-backdrop" data-close-cert></div>
+
+    <div class="cert-modal-box" role="dialog"
+         aria-modal="true" aria-labelledby="certModalTitle">
+
+        <button class="cert-modal-close" type="button"
+                aria-label="Tutup detail" data-close-cert>×</button>
+
+        <div class="cert-modal-image-wrap">
+            <img id="certModalImage" src="" alt="Pratinjau sertifikat">
+            <div id="certImageFallback" class="cert-image-fallback">
+                <span>✦</span>
+                <p>Pratinjau sertifikat belum tersedia.</p>
+                <small>Tambahkan gambar sertifikat ke folder yang sesuai.</small>
+            </div>
+        </div>
+
+        <div class="cert-modal-info">
+            <span class="cert-label" id="certModalCategory">SERTIFIKASI</span>
+            <h2 id="certModalTitle">Nama Sertifikat</h2>
+
+            <div class="cert-detail-row">
+                <span>Penyelenggara</span>
+                <strong id="certModalIssuer"></strong>
+            </div>
+
+            <div class="cert-detail-row">
+                <span>Tanggal terbit</span>
+                <strong id="certModalDate"></strong>
+            </div>
+
+            <p id="certModalDescription"></p>
+
+            <a id="certOpenImage" class="cert-open-image"
+               href="#" target="_blank" rel="noopener">
+                Buka gambar sertifikat ↗
+            </a>
+        </div>
+    </div>
+</div>
+
 
 <section id="kontak">
   <div class="wrap reveal">
@@ -468,5 +513,6 @@
 <footer>© <span id="year"></span> Gilang Dwi Permana. Dibuat dengan HTML, CSS, dan JavaScript.</footer>
 
 <script src="script.js"></script>
+<script src="navbar.js"></script>
 </body>
 </html>
