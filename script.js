@@ -695,218 +695,59 @@ function playAccessGrantedSound() {
     });
 }
 
-   /* =========================================
-   ROBOT INTRO SYSTEM
-========================================= */
+/* ===== ROBOT FINGERPRINT ACCESS ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  const intro = document.getElementById("robotIntro");
+  const scanner = document.getElementById("fingerScanner");
 
-const robotIntro =
-    document.getElementById("robotIntro");
+  if (!intro || !scanner) return;
 
-const robotText =
-    document.getElementById("robotText");
+  let activated = false;
 
-const robotSubtext =
-    document.getElementById("robotSubtext");
+  scanner.addEventListener("click", () => {
+    if (activated) return;
+    activated = true;
+    scanner.disabled = true;
 
-const highFiveArea =
-    document.getElementById("highFiveArea");
+    // Mulai efek pemindaian
+    intro.classList.add("scanning");
 
+    // Suara welcome
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
 
-/* =========================================
-   CEK ELEMENT ROBOT
-========================================= */
+      const speech = new SpeechSynthesisUtterance(
+        "Welcome to the website of Gilang Dwi Permana!"
+      );
 
-if (
-    robotIntro &&
-    robotText &&
-    robotSubtext &&
-    highFiveArea
-) {
+      speech.lang = "en-US";
+      speech.rate = 0.9;
+      speech.pitch = 0.9;
+      speech.volume = 1;
 
+      const voices = window.speechSynthesis.getVoices();
+      const voice =
+        voices.find(v =>
+          /^en-US/i.test(v.lang) &&
+          /Google US English|Microsoft David|Guy/i.test(v.name)
+        ) ||
+        voices.find(v => /^en-US/i.test(v.lang));
 
-    /* =====================================
-       STEP 1
-       Robot menyapa
-    ===================================== */
+      if (voice) speech.voice = voice;
+
+      window.speechSynthesis.speak(speech);
+    }
+
+    // Cahaya scan lalu buka website
+    setTimeout(() => {
+      intro.classList.add("scanner-exit");
+    }, 1200);
 
     setTimeout(() => {
-
-        robotText.textContent =
-            "Halo, Gilang 👋";
-
-        robotSubtext.textContent =
-            "Saya robot penjaga website ini.";
-
-    }, 800);
-
-
-    /* =====================================
-       STEP 2
-       Robot memberikan instruksi
-    ===================================== */
-
-    setTimeout(() => {
-
-        robotText.textContent =
-            "Selamat datang!";
-
-        robotSubtext.textContent =
-            "Sebelum masuk, kita tos dulu.";
-
-    }, 2500);
-
-
-    /* =====================================
-       STEP 3
-       Aktifkan HIGH FIVE
-    ===================================== */
-
-    setTimeout(() => {
-
-        robotIntro.classList.add(
-            "ready"
-        );
-
-    }, 3800);
-
-
-    /* =====================================
-       HIGH FIVE INTERACTION
-    ===================================== */
-
-    highFiveArea.addEventListener(
-        "pointerdown",
-        (event) => {
-
-
-            /* =============================
-               CEGAH KLIK KEDUA
-            ============================= */
-
-            if (
-                robotIntro.classList.contains(
-                    "high-five"
-                )
-            ) {
-                return;
-            }
-
-
-            /* =============================
-               🔊 SOUND HIGH FIVE
-            ============================= */
-
-            playHighFiveSound();
-
-
-            /* =============================
-               POSISI FLASH
-            ============================= */
-
-            const rect =
-                robotIntro.getBoundingClientRect();
-
-            const x =
-                (
-                    (event.clientX - rect.left)
-                    / rect.width
-                ) * 100;
-
-            const y =
-                (
-                    (event.clientY - rect.top)
-                    / rect.height
-                ) * 100;
-
-
-            robotIntro.style.setProperty(
-                "--flash-x",
-                x + "%"
-            );
-
-            robotIntro.style.setProperty(
-                "--flash-y",
-                y + "%"
-            );
-
-
-            /* =============================
-               AKTIFKAN HIGH FIVE
-            ============================= */
-
-            robotIntro.classList.add(
-                "high-five"
-            );
-
-            robotIntro.classList.add(
-                "success"
-            );
-
-
-            /* =============================
-               UBAH TEKS
-            ============================= */
-
-            robotText.textContent =
-                "HIGH FIVE! ✋";
-
-            robotSubtext.textContent =
-                "ACCESS GRANTED";
-
-
-            /* =============================
-               EFEK ROBOT TERKENA TOS
-            ============================= */
-
-            const robotWrapper =
-                document.querySelector(
-                    ".robot-wrapper"
-                );
-
-            if (robotWrapper) {
-
-                robotWrapper.classList.add(
-                    "robot-hit"
-                );
-
-            }
-
-
-            /* =============================
-               MATIKAN INTERAKSI
-            ============================= */
-
-            highFiveArea.style.pointerEvents =
-                "none";
-
-
-            /* =============================
-               🔊 SOUND ACCESS GRANTED
-            ============================= */
-
-            setTimeout(() => {
-
-                playAccessGrantedSound();
-
-            }, 650);
-
-
-            /* =============================
-               ROBOT KELUAR
-            ============================= */
-
-            setTimeout(() => {
-
-                robotIntro.classList.add(
-                    "hide"
-                );
-
-            }, 1400);
-
-        }
-    );
-
-}
+      intro.remove();
+    }, 2100);
+  });
+});
 
 ```javascript
 /* =========================================
@@ -951,3 +792,101 @@ document.querySelectorAll(".cert-view").forEach(button => {
     });
 });
 ```
+
+/* ===== ROBOT AI WELCOME + SUARA ===== */
+(() => {
+  const intro = document.getElementById("robotIntro");
+  const enterButton = document.getElementById("robotEnter");
+  const skipButton = document.getElementById("robotSkip");
+  const greeting = document.getElementById("robotGreeting");
+
+  if (!intro || !enterButton || !skipButton) return;
+
+  let introClosed = false;
+
+  function speakWelcome() {
+    if (!("speechSynthesis" in window)) {
+      greeting.textContent =
+        "Selamat datang di website Gilang Dwi Permana!";
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const message = new SpeechSynthesisUtterance(
+      "Selamat datang di website Gilang Dwi Permana. " +
+      "Senang bertemu dengan Anda. " +
+      "Silakan jelajahi portofolio saya."
+    );
+
+    message.lang = "id-ID";
+    message.rate = 0.9;
+    message.pitch = 1.05;
+    message.volume = 1;
+
+    const voices = window.speechSynthesis.getVoices();
+    const indonesianVoice = voices.find(voice =>
+      voice.lang.toLowerCase().startsWith("id")
+    );
+
+    if (indonesianVoice) {
+      message.voice = indonesianVoice;
+    }
+
+    greeting.textContent =
+      "Robot sedang menyampaikan sambutan suara...";
+
+    message.onend = () => {
+      if (!introClosed) {
+        greeting.textContent =
+          "Sambutan selesai. Silakan masuk ke website.";
+      }
+    };
+
+    message.onerror = () => {
+      greeting.textContent =
+        "Selamat datang di website Gilang Dwi Permana!";
+    };
+
+    window.speechSynthesis.speak(message);
+  }
+
+  function closeIntro() {
+    if (introClosed) return;
+
+    introClosed = true;
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    intro.classList.add("robot-hidden");
+
+    // Aktifkan kembali scroll website
+    document.body.style.overflow = "";
+
+    // Hapus layar intro setelah animasi selesai
+    setTimeout(() => intro.remove(), 900);
+  }
+
+  // Tampilkan intro di tengah layar
+  document.body.style.overflow = "hidden";
+
+  // Klik tombol untuk memulai suara dan masuk ke website
+  enterButton.addEventListener("click", () => {
+    speakWelcome();
+
+    enterButton.innerHTML =
+      "<span>MEMASUKI WEBSITE...</span><span>✓</span>";
+
+    // Beri waktu agar sambutan terdengar sebelum intro ditutup
+    enterButton.disabled = true;
+    enterButton.style.opacity = ".7";
+
+    setTimeout(closeIntro, 6500);
+  });
+
+  // Lewati intro tanpa suara
+  skipButton.addEventListener("click", closeIntro);
+})();
+

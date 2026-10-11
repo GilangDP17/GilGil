@@ -3586,3 +3586,396 @@ section p, .tile, .row, .proj, .cert-card, .contact { overflow-wrap: anywhere; }
         animation: none;
     }
 }
+
+
+/* ===== SYMMETRICAL FUTURISTIC ROBOT ===== */
+#robotIntro {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at center, #092b60 0%, transparent 48%),
+    #020611;
+  transition: opacity .8s ease, visibility .8s ease;
+}
+
+#robotIntro.scanner-exit {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.robot-aura {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: #087bff24;
+  filter: blur(55px);
+  animation: auraPulse 3s ease-in-out infinite;
+}
+
+.robot-scene {
+  position: relative;
+  z-index: 2;
+  width: 280px;
+  height: 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 900px;
+}
+
+.robot {
+  position: relative;
+  width: 240px;
+  height: 330px;
+  transform-style: preserve-3d;
+  animation: robotFloat 3s ease-in-out infinite;
+}
+
+/* HEAD */
+.head {
+  position: absolute;
+  z-index: 3;
+  top: 30px;
+  left: 35px;
+  width: 170px;
+  height: 135px;
+  box-sizing: border-box;
+  border: 4px solid #c7e4ff;
+  border-radius: 46px;
+  background: linear-gradient(
+    135deg, #ffffff, #a9bfdd 45%, #344b6b 80%, #e3f2ff
+  );
+  box-shadow: inset -9px -8px 15px #07152d,
+              0 0 25px #168cff45;
+}
+
+.face {
+  position: absolute;
+  inset: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  border-radius: 30px;
+  background: #030814;
+  box-shadow: inset 0 0 18px #087bff35;
+}
+
+.face span {
+  width: 17px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4ad4ff;
+  box-shadow: 0 0 12px #00aaff, 0 0 24px #087bff;
+  animation: eyeGlow 2.5s infinite;
+}
+
+.ear {
+  position: absolute;
+  top: 40px;
+  width: 13px;
+  height: 38px;
+  box-sizing: border-box;
+  border: 3px solid #62caff;
+  border-radius: 8px;
+  background: #172b49;
+}
+
+.ear-left { left: -15px; }
+.ear-right { right: -15px; }
+
+.antenna {
+  position: absolute;
+  top: 3px;
+  left: 117px;
+  width: 5px;
+  height: 28px;
+  background: #62d7ff;
+  box-shadow: 0 0 14px #168cff;
+}
+
+.antenna::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -4px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #62d7ff;
+  box-shadow: 0 0 16px #168cff;
+}
+
+/* BODY */
+.neck {
+  position: absolute;
+  top: 162px;
+  left: 100px;
+  width: 40px;
+  height: 28px;
+  background: linear-gradient(90deg, #344a68, #eff7ff, #405778);
+}
+
+.torso {
+  position: absolute;
+  top: 184px;
+  left: 25px;
+  width: 190px;
+  height: 130px;
+  box-sizing: border-box;
+  border: 4px solid #b9d9fa;
+  border-radius: 34px 34px 44px 44px;
+  background: linear-gradient(
+    135deg, #ffffff, #9eb3d0 45%, #263c5b 85%
+  );
+  box-shadow: inset -12px -8px 18px #071329;
+}
+
+.core {
+  position: absolute;
+  top: 28px;
+  left: 73px;
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+  border: 4px solid #6edbff;
+  border-radius: 50%;
+  background: #075bb7;
+  box-shadow: 0 0 18px #168cff;
+  animation: corePulse 2s infinite;
+}
+
+.chest-light {
+  position: absolute;
+  bottom: 16px;
+  left: 59px;
+  width: 64px;
+  height: 4px;
+  border-radius: 5px;
+  background: #5bd4ff;
+  box-shadow: 0 0 12px #168cff;
+}
+
+/* TWO SYMMETRICAL ARMS */
+.arm {
+  position: absolute;
+  top: 196px;
+  z-index: 4;
+  width: 38px;
+  height: 76px;
+  box-sizing: border-box;
+  border: 4px solid #b6d6fa;
+  border-radius: 22px;
+  background: linear-gradient(90deg, #354b69, #edf6ff, #617da4);
+  transform-origin: 50% 16px;
+}
+
+.arm-left {
+  left: 0;
+  transform: rotate(30deg);
+}
+
+.arm-right {
+  right: 0;
+  transform: rotate(-30deg);
+}
+
+.shoulder {
+  position: absolute;
+  top: 6px;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border: 3px solid #5ccfff;
+  border-radius: 50%;
+  background: #142947;
+}
+
+.forearm {
+  position: absolute;
+  bottom: -12px;
+  left: 3px;
+  width: 24px;
+  height: 28px;
+  border-radius: 9px;
+  background: linear-gradient(90deg, #344b6a, #eaf5ff);
+}
+
+.hand {
+  position: absolute;
+  bottom: -22px;
+  left: -5px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 38px;
+  height: 29px;
+  border: 3px solid #b6d6fa;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #f4faff, #526d92);
+}
+
+.hand i {
+  width: 5px;
+  height: 15px;
+  margin-top: -11px;
+  border: 1px solid #a8d9ff;
+  border-radius: 5px;
+  background: linear-gradient(#eaf6ff, #6d8cb7);
+}
+
+.hand i:nth-child(2),
+.hand i:nth-child(3) {
+  height: 19px;
+  margin-top: -15px;
+}
+
+/* MINIMAL FINGERPRINT BUTTON */
+#fingerScanner {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  margin-top: 12px;
+  padding: 0;
+  border: 2px solid #168cff;
+  border-radius: 50%;
+  background: #06152b;
+  color: #65dcff;
+  cursor: pointer;
+  box-shadow: 0 0 24px #087bff40, inset 0 0 18px #087bff20;
+  transition: .25s ease;
+  animation: scannerPulse 2s ease-in-out infinite;
+}
+
+#fingerScanner:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 38px #087bff90;
+}
+
+.fingerprint-ring {
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  border: 1px solid #168cff70;
+  border-radius: 50%;
+}
+
+.fingerprint-ring svg {
+  width: 49px;
+  height: 49px;
+}
+
+/* SCAN EFFECT */
+#robotIntro.scanning #fingerScanner {
+  color: #ffffff;
+  border-color: #a1f4ff;
+  box-shadow: 0 0 45px #00bfff, inset 0 0 25px #00bfff65;
+  animation: scanPulse .35s infinite alternate;
+}
+
+#robotIntro.scanning .core {
+  box-shadow: 0 0 35px #00c8ff;
+  background: #00c8ff;
+}
+
+#robotIntro.scanning .robot {
+  animation: robotScan .5s ease-in-out 2;
+}
+
+.scan-flash {
+  position: absolute;
+  z-index: 8;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #8ef4ff;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#robotIntro.scanning .scan-flash {
+  animation: scanBurst .8s ease-out forwards;
+}
+
+/* KEYFRAMES */
+@keyframes robotFloat {
+  0%, 100% { transform: translateY(0) rotateY(-3deg); }
+  50% { transform: translateY(-10px) rotateY(3deg); }
+}
+
+@keyframes auraPulse {
+  0%, 100% { transform: scale(.9); opacity: .55; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+@keyframes eyeGlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .7; }
+}
+
+@keyframes corePulse {
+  0%, 100% { box-shadow: 0 0 12px #168cff; }
+  50% { box-shadow: 0 0 26px #168cff; }
+}
+
+@keyframes scannerPulse {
+  0%, 100% { box-shadow: 0 0 18px #087bff30; }
+  50% { box-shadow: 0 0 32px #087bff75; }
+}
+
+@keyframes scanPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+@keyframes robotScan {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.8); }
+}
+
+@keyframes scanBurst {
+  from { opacity: .9; transform: scale(1); }
+  to { opacity: 0; transform: scale(28); }
+}
+
+@media (max-width: 420px) {
+  .robot-scene {
+    transform: scale(.88);
+    margin-bottom: -15px;
+  }
+
+  #fingerScanner {
+    width: 90px;
+    height: 90px;
+    margin-top: 0;
+  }
+
+  .fingerprint-ring {
+    width: 74px;
+    height: 74px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .robot,
+  .robot-aura,
+  .face span,
+  .core,
+  #fingerScanner {
+    animation: none;
+  }
+}

@@ -68,132 +68,52 @@
 </script>
 </head>
 <body>
-  <!-- =========================================
-     ROBOT INTRO / WELCOME SCREEN
-========================================= -->
-
-<div id="robotIntro" class="robot-intro">
-
-    <div class="robot-bg"></div>
-
-    <!-- Glow -->
-    <div class="robot-glow"></div>
-
-    <!-- Text -->
-    <div class="robot-message">
-        <div class="robot-status">
-            ● SYSTEM ONLINE
-        </div>
-
-        <h2 id="robotText">
-            Halo, Gilang...
-        </h2>
-
-        <p id="robotSubtext">
-            Selamat datang di website saya.
-        </p>
-    </div>
-
-
-    <!-- ROBOT -->
-    <div class="robot-wrapper">
-
-        <div class="robot">
-
-            <!-- Antenna -->
-            <div class="robot-antenna">
-                <span></span>
-            </div>
-
-            <!-- Head -->
-            <div class="robot-head">
-
-                <div class="robot-ear left"></div>
-                <div class="robot-ear right"></div>
-
-                <div class="robot-face">
-
-                    <div class="robot-eyes">
-                        <span></span>
-                        <span></span>
-                    </div>
-
-                    <div class="robot-mouth"></div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Body -->
-            <div class="robot-body">
-
-                <div class="robot-core">
-                    <span></span>
-                </div>
-
-                <div class="robot-panel">
-                    <i></i>
-                    <i></i>
-                    <i></i>
-                </div>
-
-            </div>
-
-
-            <!-- Left Arm -->
-            <div class="robot-arm left-arm">
-
-                <div class="robot-upper-arm"></div>
-
-                <div class="robot-hand">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-
-            </div>
-
-
-            <!-- Right Arm -->
-            <div class="robot-arm right-arm">
-
-                <div class="robot-upper-arm"></div>
-
-                <div class="robot-hand">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- HIGH FIVE AREA -->
-    <div id="highFiveArea" class="high-five-area">
-
-        <div class="high-five-ring"></div>
-
-        <div class="high-five-icon">
-            ✋
-        </div>
-
-        <p>
-            TAP UNTUK TOS
-        </p>
-
-    </div>
   
+```html
+<!-- ===== ROBOT INTRO 3D ===== -->
+<div id="robotIntro">
+  <div class="robot-aura"></div>
+
+  <div class="robot-intro-copy">
+    <span class="robot-intro-kicker">SYSTEM ONLINE</span>
+    <h2>IDENTITY VERIFICATION</h2>
+    <p>Scan sidik jari untuk memulai pengalaman.</p>
+  </div>
+
+  <div class="robot-scene">
+    <!-- Model robot 3D akan dimuat oleh JavaScript -->
+    <canvas id="robotCanvas" aria-label="Robot 3D interaktif">
+      Browser kamu tidak mendukung canvas.
+    </canvas>
+  </div>
+
+  <div class="robot-intro-controls">
+    <button id="fingerScanner" type="button"
+            aria-label="Mulai pemindaian sidik jari">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 11v3"/>
+        <path d="M9 10a3 3 0 0 1 6 0v4"/>
+        <path d="M6 11v2a6 6 0 0 0 1 3"/>
+        <path d="M18 11v2a6 6 0 0 1-1 4"/>
+        <path d="M9 16a3 3 0 0 0 6 0"/>
+        <path d="M4 10a8 8 0 0 1 16 0"/>
+        <path d="M12 19v2"/>
+      </svg>
+    </button>
+
+    <p class="robot-scan-status" id="robotScanStatus"
+       aria-live="polite">
+      SENTUHKAN UNTUK MEMINDAI
+    </p>
+
+    <button id="robotEnter" type="button">
+      Masuk ke Portofolio →
+    </button>
+  </div>
 </div>
- 
+<!-- ===== AKHIR ROBOT INTRO ===== -->
+```
 
-  
 
   <div class="pixel-snow-container" id="pixel-snow"></div>
   
